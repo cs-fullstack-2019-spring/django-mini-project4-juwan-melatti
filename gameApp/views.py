@@ -3,16 +3,21 @@ from.forms import GameCollectorForm,GameForm,GameCollector,Game
 from django.contrib.auth.models import User
 
 # Create your views here.
+
+
 def index(request):
+    return render(request,'gameApp/index.html')
+
+def createAccount(request):
 
     newGameCollectorForm=GameCollectorForm()
     context={
 
         'GCForm':newGameCollectorForm,
     }
-    return render(request,'gameApp/index.html',context)
+    return render(request,'gameApp/createAccount.html',context)
 
-def confirm(request):
+def confirmAccount(request):
     newGameCollectorForm=GameCollectorForm(request.POST)
     context={
 
@@ -20,6 +25,14 @@ def confirm(request):
     }
 
     if request.POST['Password1'] == request.POST['Password2']:
-        return render(request, 'gameApp/confirm.html')
+        User.objects.create(request.POST['username'],request.POST['Password1'])
+        return render(request,'gameApp/confirm.html')
+
     else:
-        return render(request,'gameApp/failure.html')
+        newGameCollectorForm=GameCollectorForm(request.POST)
+        message="These passwords do not match."
+        context={
+            'GCForm':newGameCollectorForm,
+            'message':message
+        }
+        return render(request,'gameApp/createAccount.html',context)

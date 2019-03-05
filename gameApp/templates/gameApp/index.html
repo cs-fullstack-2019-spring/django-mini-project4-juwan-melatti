@@ -5,14 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Template</h1>
-<form action="{% url 'confirm' %} " method="post">
-
-    {%csrf_token%}
-    {{GCForm.as_p}}
-    <input type="submit" value="submit">
-
-</form>
-
+Welcome
+Click here to login
+<a href="{% url 'createAccount' %}">Click here to create an account</a>
 </body>
 </html>
