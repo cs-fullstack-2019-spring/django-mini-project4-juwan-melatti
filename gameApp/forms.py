@@ -7,6 +7,8 @@ class GameCollectorForm(forms.ModelForm):
         exclude= ['userTableForeignKey','dateAccountCreated']
 
 
+
+
 class GameForm(forms.ModelForm):
     class Meta:
         model=Game

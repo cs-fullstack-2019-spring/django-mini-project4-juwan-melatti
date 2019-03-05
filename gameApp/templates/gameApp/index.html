@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Template</h1>
-<form method="post">
+<form action="{% url 'confirm' %} " method="post">
 
     {%csrf_token%}
     {{GCForm.as_p}}
