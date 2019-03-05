@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .forms import GameCollectorForm, GameForm, GameCollector, Game
 from django.contrib.auth.models import User
 
@@ -71,5 +71,5 @@ def addGame(request):
         addGame.save()
         return HttpResponse("The World Shall Now Access Your Game")
 
-    return render(request, 'gameApp/createGame.html', context)
+    return redirect(request, 'gameApp/index.html', context)
 
