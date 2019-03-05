@@ -7,8 +7,33 @@
 </head>
 <body>
 {% if user.is_authenticated %}
+<!--<<<<<<< HEAD-->
 {{user.get_username}}
 <a href="{% url 'logout' %}">Click here to logout</a>
+=======
+Hello:{{user.get_username}}
+
+{% if userGame %}
+    {% for x in userGame %}
+    {{x.name}}<br>
+    {{x.developer}}<br>
+    {{x.dateMade}}<br>
+    {{x.ageLimit}}<br>
+    <br>
+    Edit Game<br>
+    Delete Game<br>
+    <hr>
+    {% endfor %}
+{% else %}
+No games available
+<br>
+<h2>Would you like to add a Game to the Game universe?</h2>
+<br>
+<h3>click <a href="{% url 'addGame' %}">here</a></h3>
+{% endif %}
+
+
+<!--&gt;>>>>>> ccefd07943d734b76297d8ec352f372c15f79fd2-->
 
 {% else %}
 Welcome

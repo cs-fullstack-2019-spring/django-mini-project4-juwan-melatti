@@ -6,9 +6,18 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 
-# <<<<<<< HEAD
-def index(request):
-    return render(request, 'gameApp/index.html')
+
+def index(request): #default function
+    if request.user.is_authenticated:
+        userGame= GameCollector.objects.filter(userTableForeignKey=request.user)
+        context= {
+        'userGame':userGame
+         }
+        return render(request,'gameApp/index.html',context)   #takes user to the index page
+    else:
+        return render(request,'gameApp/index.html')   #takes user to the index page
+
+
 
 
 def createAccount(request):
