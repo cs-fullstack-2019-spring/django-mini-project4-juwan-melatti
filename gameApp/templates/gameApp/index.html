@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
 {% if user.is_authenticated %}
 Hello:{{user.get_username}}
+
 {% if userGame %}
     {% for x in userGame %}
     {{x.name}}<br>
@@ -17,6 +19,7 @@ Hello:{{user.get_username}}
     Edit Game<br>
     Delete Game<br>
     <hr>
+    {% endfor %}
 {% else %}
 No games available
 {% endif %}
