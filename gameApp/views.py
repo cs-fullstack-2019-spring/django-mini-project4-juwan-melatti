@@ -49,15 +49,15 @@ def confirmAccount(request):   #message to confirm user is inside
         }
         return render(request, 'gameApp/createAccount.html', context)       #goes back to create account page with information already filled in
 
-def myGames(request,id):
-    myGames = get_object_or_404(Game, pk=id)
-    myGames.save()
-    myGames = Game.object.all()
-    context = {
-        "myGames" : myGames,
-        "Game": Game
-    }
-    return render(request, 'gameApp/myGames.html', context)
+# def myGames(request,id):
+#     myGames = get_object_or_404(Game, pk=id)
+#     myGames.save()
+#     myGames = Game.object.all()
+#     context = {
+#         "myGames" : myGames,
+#         "Game": Game
+#     }
+#     return render(request, 'gameApp/myGames.html', context)
 
 
 def addGame(request):
@@ -71,5 +71,5 @@ def addGame(request):
         addGame.save()
         return HttpResponse("The World Shall Now Access Your Game")
 
-    return redirect(request, 'gameApp/index.html', context)
+    return render(request, 'gameApp/createGame.html', context)
 
