@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .forms import GameCollectorForm, GameForm, GameCollector, Game
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -9,9 +10,11 @@ from django.contrib.auth.models import User
 
 def index(request): #default function
     if request.user.is_authenticated:  #if there is a user login
-        userGame= GameCollector.objects.filter(userTableForeignKey=request.user)  #grabs the game collector
+        userCollector= GameCollector.objects.filter(userTableForeignKey=request.user)  #grabs the game collector
+        userGame=Game.objects.all()
         context= {
-        'userGame':userGame
+        'userCollector':userCollector,
+        'userGame':userGame,
          }
         return render(request,'gameApp/index.html',context)   #takes user to the index page
     else:
@@ -59,17 +62,18 @@ def confirmAccount(request):   #message to confirm user is inside
 #     }
 #     return render(request, 'gameApp/myGames.html', context)
 
-
+@login_required
 def addGame(request):
-    addGame = GameForm
+    addGame = GameForm()
     context = {
         "addGameForm": addGame
     }
     if request.method == "POST":
-        Game.objects.create(request.POST["name"], request.POST['developer'], request.POST['dateMade'],
-                            request.POST["ageLimit"], request.POST["gameCreator"])
-        addGame.save()
-        return HttpResponse("The World Shall Now Access Your Game")
-
+        print('save')
+        thisgame=Game.objects.create(name=request.POST["name"], developer=request.POST['developer'], dateMade=request.POST['dateMade'],
+                            ageLimit=request.POST["ageLimit"])
+        return render(request,'gameApp/index.html',)
+    else:
+        print('hi')
     return render(request, 'gameApp/createGame.html', context)
 
