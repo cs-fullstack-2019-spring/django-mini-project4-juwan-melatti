@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 
+# <<<<<<< HEAD
 def index(request):
     return render(request, 'gameApp/index.html')
 
@@ -27,7 +28,7 @@ def confirmAccount(request):
     }
 
     if request.POST['Password1'] == request.POST['Password2']:
-        User.objects.create(request.POST['username'], "", request.POST['Password1'])
+        User.objects.create_user(request.POST['username'], "", request.POST['Password1'])
         return render(request, 'gameApp/confirm.html', context)
 
     else:
@@ -38,3 +39,16 @@ def confirmAccount(request):
             'message': message
         }
         return render(request, 'gameApp/createAccount.html', context)
+
+
+def addGame(request):
+    addGame = GameForm
+    context = {
+        "addGameForm": addGame
+    }
+    if request.method == "POST":
+        Game.objects.create(request.POST["name"], request.POST['developer'], request.POST['dateMade'],
+                            request.POST["ageLimit"], request.POST["gameCreator"])
+        addGame.save()
+        return HttpResponse("The World Shall Now Access Your Game")
+    return render(request, 'gameApp/createGame.html', context)

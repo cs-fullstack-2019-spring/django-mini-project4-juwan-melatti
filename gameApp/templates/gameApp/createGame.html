@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Game</title>
 </head>
 <body>
-
-</body>
+DO YOUR"E A GAMER??? ADD YOUR GAME
+<form action="{% url 'addGame' %}" method="post">
+    {% csrf_token %}
+    {{ addGameForm }}
+    <button>Submit To the Game Portal</button>
+</form>
 </html>
