@@ -6,7 +6,12 @@ from django.contrib.auth.models import User
 
 
 def index(request): #default function
-    return render(request,'gameApp/index.html')   #takes user to the index page
+
+    userGame= Game.objects.filter(gameCreator=request.user)
+    context= {
+        'userGame':userGame
+    }
+    return render(request,'gameApp/index.html',context)   #takes user to the index page
 
 def createAccount(request):  #allows user to create an account (get request)
 
