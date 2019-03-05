@@ -25,7 +25,7 @@ def confirmAccount(request):   #confirms if user-login is valid
     }
 
     if request.POST['Password1'] == request.POST['Password2']:  #if the passwords match,
-        User.objects.create(request.POST['username'],request.POST['Password1'])   #create the new user with username and password
+        User.objects.create_user(request.POST['username'],'',request.POST['Password1'])   #create the new user with username and password
         return render(request,'gameApp/confirm.html')  #renders on a conformation page
 
     else:
