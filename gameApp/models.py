@@ -8,10 +8,17 @@ class GameCollector(models.Model):
     Password1=models.CharField(max_length=70)
     Password2=models.CharField(max_length=70)
     dateAccountCreated=models.DateField(default=timezone.now())
-    userTableForeginKey= models.ForeignKey(User,on_delete=models.PROTECT,null=True,blank=True)
+    userTableForeignKey= models.ForeignKey(User,on_delete=models.PROTECT,null=True,blank=True)
+
+    def __str__(self):
+        return self.username
+
 class Game(models.Model):
     name=models.CharField(max_length=70)
     developer=models.CharField(max_length=70)
     dateMade=models.DateTimeField()
     ageLimit=models.PositiveIntegerField()
     gameCreator=models.ForeignKey(GameCollector, on_delete=models.PROTECT, null=True, blank = True)
+
+    def __str__(self):
+        return self.name
