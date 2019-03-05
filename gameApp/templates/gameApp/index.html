@@ -5,8 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+{% if user.is_authenticated %}
+{{user.get_username}}
+
+
+{% else %}
 Welcome
-Click here to login
+<a href ="{% url 'login' %}">Click here to login</a>
 <a href="{% url 'createAccount' %}">Click here to create an account</a>
+{% endif %}
 </body>
 </html>
