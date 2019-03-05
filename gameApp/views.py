@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 
 
 def index(request): #default function
-    if request.user.is_authenticated:
-        userGame= GameCollector.objects.filter(userTableForeignKey=request.user)
+    if request.user.is_authenticated:  #if there is a user login
+        userGame= GameCollector.objects.filter(userTableForeignKey=request.user)  #grabs the game collector
         context= {
         'userGame':userGame
          }
@@ -20,34 +20,34 @@ def index(request): #default function
 
 
 
-def createAccount(request):
-    newGameCollectorForm = GameCollectorForm()
+def createAccount(request):   #create a new account
+    newGameCollectorForm = GameCollectorForm()   #starts a blank form (get request)
     context = {
 
         'GCForm': newGameCollectorForm,
     }
-    return render(request, 'gameApp/createAccount.html', context)
+    return render(request, 'gameApp/createAccount.html', context)  #renders to create an account page
 
 
-def confirmAccount(request):
-    newGameCollectorForm = GameCollectorForm(request.POST)
+def confirmAccount(request):   #message to confirm user is inside
+    newGameCollectorForm = GameCollectorForm(request.POST)    #takes information from post method
     context = {
 
         'GCForm': newGameCollectorForm,
     }
 
-    if request.POST['Password1'] == request.POST['Password2']:
-        User.objects.create_user(request.POST['username'], "", request.POST['Password1'])
-        return render(request, 'gameApp/confirm.html', context)
+    if request.POST['Password1'] == request.POST['Password2']:   #if the passwords match the user will be created
+        User.objects.create_user(request.POST['username'], "", request.POST['Password1'])   #creates user and pass
+        return render(request, 'gameApp/confirm.html', context)   #renders to conformation page
 
     else:
-        newGameCollectorForm = GameCollectorForm(request.POST)
-        message = "These passwords do not match."
+        newGameCollectorForm = GameCollectorForm(request.POST)      #holds the information
+        message = "These passwords do not match."       #gives a message to the user that the passwords do not match
         context = {
             'GCForm': newGameCollectorForm,
             'message': message
         }
-        return render(request, 'gameApp/createAccount.html', context)
+        return render(request, 'gameApp/createAccount.html', context)       #goes back to create account page with information already filled in
 
 def myGames(request,id):
     myGames = get_object_or_404(Game, pk=id)
