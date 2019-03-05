@@ -13,3 +13,6 @@ class GameForm(forms.ModelForm):
     class Meta:
         model=Game
         exclude=['gameCreator']
+        widgets ={
+            'dateMade': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+        }

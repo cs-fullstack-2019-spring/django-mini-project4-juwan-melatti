@@ -5,10 +5,10 @@
     <title>Create Game</title>
 </head>
 <body>
-DO YOUR"E A GAMER??? ADD YOUR GAME
+SO YOUR"E A GAMER??? ADD YOUR GAME
 <form action="{% url 'addGame' %}" method="post">
     {% csrf_token %}
-    {{ addGameForm }}
+    {{ addGameForm.as_p }}
     <button>Submit To the Game Portal</button>
 </form>
 </html>

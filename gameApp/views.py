@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from .forms import GameCollectorForm, GameForm, GameCollector, Game
 from django.contrib.auth.models import User
 
@@ -40,6 +40,16 @@ def confirmAccount(request):
         }
         return render(request, 'gameApp/createAccount.html', context)
 
+def myGames(request,id):
+    myGames = get_object_or_404(Game, pk=id)
+    myGames.save()
+    myGames = Game.object.all()
+    context = {
+        "myGames" : myGames,
+        "Game": Game
+    }
+    return render(request, 'gameApp/myGames.html', context)
+
 
 def addGame(request):
     addGame = GameForm
@@ -51,4 +61,6 @@ def addGame(request):
                             request.POST["ageLimit"], request.POST["gameCreator"])
         addGame.save()
         return HttpResponse("The World Shall Now Access Your Game")
+
     return render(request, 'gameApp/createGame.html', context)
+

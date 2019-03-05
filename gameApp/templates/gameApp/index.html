@@ -8,11 +8,13 @@
 <body>
 {% if user.is_authenticated %}
 {{user.get_username}}
-
+<a href="{% url 'logout' %}">Click here to logout</a>
 
 {% else %}
 Welcome
+
 <a href ="{% url 'login' %}">Click here to login</a>
+
 <a href="{% url 'createAccount' %}">Click here to create an account</a>
 {% endif %}
 </body>

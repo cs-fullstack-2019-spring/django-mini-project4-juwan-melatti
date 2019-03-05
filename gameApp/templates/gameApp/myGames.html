@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for eachGame in myGames %}
+{{ eachGame.name}}
+{{ eachGame.developer}}
+{% endfor %}
+
+To add a game into the Game Universe <a href="{% url 'addGame' %}"> here</a>
+</body>
+</html>
