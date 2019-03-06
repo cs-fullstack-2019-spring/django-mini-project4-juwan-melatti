@@ -9,9 +9,9 @@
 <form method="post">
     {% csrf_token %}
     Are you sure you want to delete "{{ selectedGame }}" ?
-    <input type="submit" value="delete" />
+    <input type="submit" value="Its Junk" />
 
 </form>
-<input type="submit" value="d">
+<button><a href="{% url 'index' %}"></a>No! shall not delete my prize possessions</button>
 </body>
 </html>
