@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+
 </head>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'gameApp/gameAppcss.css' %}">
 <body>
 {% if user.is_authenticated %}
-<!--<<<<<<< HEAD-->
+
 <h1>{{user.get_username}}</h1>
 <br>
 <h2><a href="{% url 'logout' %}">Click here to logout</a></h2>
-<!--=======-->
+
 <br>
 <h1>Hello:{{user.get_username}}</h1>
 
@@ -39,14 +42,16 @@ No games available
 {% endif %}
 
 
-<!--&gt;>>>>>> ccefd07943d734b76297d8ec352f372c15f79fd2-->
 
 {% else %}
-Welcome
-
+<div class="loginlogout">
+<h1>Welcome To The Gamer Lagoon</h1>
+    <br>
 <a href ="{% url 'login' %}">Click here to login</a>
+<br>
 
 <a href="{% url 'createAccount' %}">Click here to create an account</a>
 {% endif %}
+</div>
 </body>
 </html>
