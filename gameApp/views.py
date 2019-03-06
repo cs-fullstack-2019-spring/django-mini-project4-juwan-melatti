@@ -9,9 +9,11 @@ from django.contrib.auth.models import User
 
 def index(request): #default function
     if request.user.is_authenticated:  #if there is a user login
-        userGame= GameCollector.objects.filter(userTableForeignKey=request.user)  #grabs the game collector
+        myGames = Game.objects.filter(gameCreater=userGame)
+        userGame= get_object_or_404(userTableForeignKey=request.user)  #grabs the game collector
         context= {
-        'userGame':userGame
+            "myGames": myGames,
+            'userGame':userGame
          }
         return render(request,'gameApp/index.html',context)   #takes user to the index page
     else:
@@ -68,7 +70,6 @@ def addGame(request):
     if request.method == "POST":
         Game.objects.create(request.POST["name"], request.POST['developer'], request.POST['dateMade'],
                             request.POST["ageLimit"], request.POST["gameCreator"])
-        addGame.save()
         return HttpResponse("The World Shall Now Access Your Game")
 
     return render(request, 'gameApp/createGame.html', context)

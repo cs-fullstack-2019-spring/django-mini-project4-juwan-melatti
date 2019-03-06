@@ -9,7 +9,8 @@ class GameCollector(models.Model):
     Password1 = models.CharField(max_length=70)
     Password2 = models.CharField(max_length=70)
     dateAccountCreated = models.DateField(default=timezone.now)
-    userTableForeignKey = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
+    userTableForeignKey = models.ForeignKey(User, on_delete=models.PROTECT,
+                                            null=True, blank=True)
 
     def __str__(self):
         return self.username
