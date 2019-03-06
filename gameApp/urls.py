@@ -10,4 +10,5 @@ urlpatterns = [
     path('editGame/<int:id>/', views.editGame, name="editGame"),
     path("deleteGame/<int:id>/", views.deleteGame, name="deleteGame")
 
+
 ]

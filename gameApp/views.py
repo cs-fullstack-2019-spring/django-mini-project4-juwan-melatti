@@ -40,7 +40,7 @@ def confirmAccount(request):  # message to confirm user is inside
 
     if request.POST['Password1'] == request.POST['Password2']:  # if the passwords match the user will be created
         User.objects.create_user(request.POST['username'], "", request.POST['Password1'])  # creates user and pass
-        newGameCollector=GameCollector.objects.create(username = request.POST['username'])
+        newGameCollector = GameCollector.objects.create(username=request.POST["username"])
         return render(request, 'gameApp/confirm.html', context)  # renders to conformation page
 
     else:
@@ -76,8 +76,10 @@ def addGame(request):
         print(request.POST)
 
         print('save')
+
         placeholder=request.POST['dateMade_year'] + '-' + request.POST['dateMade_month'] + "-" + request.POST['dateMade_day']
         thisgame = Game.objects.create(name=request.POST["name"], developer=request.POST['developer'], dateMade=placeholder, ageLimit=request.POST["ageLimit"], gameCreator=userCollector[0])
+
         print(request.user)
 
         return redirect('index')
@@ -94,9 +96,6 @@ def editGame(request,id):
         return redirect("index")
 
     return render(request, "gameApp/createGame.html", {'addGameForm': newGame})
-
-
-
 
 
 def deleteGame(request,id):
