@@ -5,11 +5,13 @@
     <title>Title</title>
 </head>
 <body>
+
 <form method="post">
     {% csrf_token %}
     Are you sure you want to delete "{{ selectedGame }}" ?
     <input type="submit" value="delete" />
-</form>
 
+</form>
+<input type="submit" value="d">
 </body>
 </html>
