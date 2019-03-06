@@ -7,3 +7,16 @@ body {
     font-size: 300%;
     font-family: fantasy;
 }
+
+/*.userformat{*/
+    /*border: 10px solid blue;*/
+    /*margin-left: 40px;*/
+    /*margin-right: 40px;*/
+    /*font-size: 300%;*/
+    /*font-weight: bold;*/
+/*}*/
+
+.mygames{
+    font-style: italic;
+
+}

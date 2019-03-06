@@ -9,15 +9,16 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'gameApp/gameAppcss.css' %}">
 <body>
+<div class="userformat">
 {% if user.is_authenticated %}
 
 <h1>{{user.get_username}}</h1>
-<br>
+</div>
 <h2><a href="{% url 'logout' %}">Click here to logout</a></h2>
 
 <br>
 <h1>Hello:{{user.get_username}}</h1>
-
+<h2 class="mygames">My Games</h2>
 <br>
 {% if userGame %}
     {% for x in userGame %}
