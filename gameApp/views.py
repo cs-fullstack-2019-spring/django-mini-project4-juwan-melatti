@@ -72,7 +72,7 @@ def addGame(request):
         print('save')
         thisgame=Game.objects.create(name=request.POST["name"], developer=request.POST['developer'], dateMade=request.POST['dateMade'],
                             ageLimit=request.POST["ageLimit"])
-        return render(request,'gameApp/index.html',)
+        return redirect('index')
     else:
         print('hi')
     return render(request, 'gameApp/createGame.html', context)
