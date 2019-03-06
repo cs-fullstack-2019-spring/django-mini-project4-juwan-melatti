@@ -7,5 +7,7 @@ urlpatterns = [
     path('confirmAccount/', views.confirmAccount, name='confirmAccount'),
     # path('login/mygames/<int:id>', views.myGames, name='myGames'),
     path('addGame/', views.addGame, name='addGame'),
+    path('/addGame/editGame/<int:id>/', views.editGame, name="editGame"),
+    path("/addGame/deleteGame/<int:id>/", views.deleteGame, name="deleteGame")
 
 ]

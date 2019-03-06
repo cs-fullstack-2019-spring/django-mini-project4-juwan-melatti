@@ -14,12 +14,7 @@
 <!--=======-->
 <br>
 <h1>Hello:{{user.get_username}}</h1>
-<h1>Here are all you games</h1>
-{% for eachGame in myGames %}
-{{ eachGame.name }}
-<br>
-{{ eachGame.developer }}
-{% endfor %}
+
 <br>
 {% if userGame %}
     {% for x in userGame %}
@@ -28,8 +23,10 @@
     {{x.dateMade}}<br>
     {{x.ageLimit}}<br>
     <br>
-    Edit Game<br>
-    Delete Game<br>
+<a href="{% url 'editGame' x.id %}">Edit Game</a>
+<br>
+<a href="{% url 'deleteGame' x.id %}">Delete Game</a>
+<br>
     <hr>
     {% endfor %}
 <a href="{% url 'addGame' %}">Add a new game</a>

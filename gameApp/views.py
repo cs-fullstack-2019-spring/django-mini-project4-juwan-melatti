@@ -7,15 +7,15 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+
 def index(request):  # default function
     if request.user.is_authenticated:  # if there is a user login
-
-        userCollector = GameCollector.objects.filter(userTableForeignKey=request.user)  # grabs the game collector
-        userGame = Game.objects.all()
+        userCollector = GameCollector.objects.filter(username=request.user)  # grabs the game collector
+        print(userCollector)
+        userGame = Game.objects.filter(gameCreator_id=userCollector[0])
         context = {
             'userCollector': userCollector,
             'userGame': userGame,
-
         }
         return render(request, 'gameApp/index.html', context)  # takes user to the index page
     else:
@@ -69,18 +69,38 @@ def addGame(request):
     context = {
         "addGameForm": addGame
     }
+    userCollector = GameCollector.objects.filter(username=request.user)  # grabs the game collector
+    print(userCollector)
     if request.method == "POST":
-
-        Game.objects.create(request.POST["name"], request.POST['developer'], request.POST['dateMade'],
-                            request.POST["ageLimit"], request.POST["gameCreator"])
-        return HttpResponse("The World Shall Now Access Your Game")
-
         print('save')
         thisgame = Game.objects.create(name=request.POST["name"], developer=request.POST['developer'],
                                        dateMade=request.POST['dateMade'],
-                                       ageLimit=request.POST["ageLimit"])
+                                       ageLimit=request.POST["ageLimit"], gameCreator=userCollector[0])
+        print(request.user)
+
         return redirect('index')
     else:
         print('hi')
 
     return render(request, 'gameApp/createGame.html', context)
+
+def editGame(request,id):
+    game = get_object_or_404(Game, pk=id)
+    newGame = GameForm(request.POST or None, instance=game)
+    if newGame.is_valid():
+        newGame.save()
+        return redirect("index")
+
+    return render(request, "gameApp/index.html", {'newGame': newGame})
+
+
+
+
+
+def deleteGame(request,id):
+    game = get_object_or_404(Game, pk=id)
+    if request.method == 'POST':
+        game.delete()
+        return redirect('index')
+
+    return render(request, "contactBookApp/deleteGame.html", {"selectedGame": game})
