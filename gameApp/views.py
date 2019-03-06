@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
-
 def index(request):  # default function
     if request.user.is_authenticated:  # if there is a user login
         userCollector = GameCollector.objects.filter(username=request.user)  # grabs the game collector
@@ -77,8 +76,12 @@ def addGame(request):
 
         print('save')
 
-        placeholder=request.POST['dateMade_year'] + '-' + request.POST['dateMade_month'] + "-" + request.POST['dateMade_day']
-        thisgame = Game.objects.create(name=request.POST["name"], developer=request.POST['developer'], dateMade=placeholder, ageLimit=request.POST["ageLimit"], gameCreator=userCollector[0])
+
+        placeholder = request.POST['dateMade_year'] + '-' + request.POST['dateMade_month'] + "-" + request.POST[
+            'dateMade_day']
+        thisgame = Game.objects.create(name=request.POST["name"], developer=request.POST['developer'],
+                                       dateMade=placeholder, ageLimit=request.POST["ageLimit"],
+                                       gameCreator=userCollector[0])
 
         print(request.user)
 
@@ -88,7 +91,8 @@ def addGame(request):
 
     return render(request, 'gameApp/createGame.html',context)
 
-def editGame(request,id):
+
+def editGame(request, id):
     game = get_object_or_404(Game, pk=id)
     newGame = GameForm(request.POST, instance=game)
     if newGame.is_valid():
@@ -98,7 +102,7 @@ def editGame(request,id):
     return render(request, "gameApp/createGame.html", {'addGameForm': newGame})
 
 
-def deleteGame(request,id):
+def deleteGame(request, id):
     game = get_object_or_404(Game, pk=id)
     if request.method == 'POST':
         game.delete()
