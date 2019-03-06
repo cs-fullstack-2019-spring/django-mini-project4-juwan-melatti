@@ -18,7 +18,7 @@ class GameCollector(models.Model):
 class Game(models.Model):
     name = models.CharField(max_length=70)
     developer = models.CharField(max_length=70)
-    dateMade = models.DateTimeField()
+    dateMade = models.DateField()
     ageLimit = models.PositiveIntegerField()
     gameCreator = models.ForeignKey(GameCollector, on_delete=models.PROTECT, null=True, blank=True)
 

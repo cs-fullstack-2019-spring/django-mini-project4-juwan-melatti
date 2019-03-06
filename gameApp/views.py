@@ -10,8 +10,9 @@ from django.contrib.auth.decorators import login_required
 
 def index(request): #default function
     if request.user.is_authenticated:  #if there is a user login
-        userCollector= GameCollector.objects.filter(userTableForeignKey=request.user)  #grabs the game collector
-        userGame=Game.objects.all()
+        userCollector= GameCollector.objects.filter(username=request.user)  #grabs the game collector
+        print(userCollector)
+        userGame=Game.objects.filter(gameCreator_id=userCollector[0])
         context= {
         'userCollector':userCollector,
         'userGame':userGame,
@@ -39,8 +40,9 @@ def confirmAccount(request):   #message to confirm user is inside
         'GCForm': newGameCollectorForm,
     }
 
-    if request.POST['Password1'] == request.POST['Password2']:   #if the passwords match the user will be created
-        User.objects.create_user(request.POST['username'], "", request.POST['Password1'])   #creates user and pass
+    if request.POST['Password1'] == request.POST['Password2'] and newGameCollectorForm.is_valid():   #if the passwords match the user will be created
+        User.objects.create_user(request.POST['username'], "", request.POST['Password1']) #creates user and pass
+        newGamer=GameCollector.objects.create(username=request.POST['username'])
         return render(request, 'gameApp/confirm.html', context)   #renders to conformation page
 
     else:
@@ -68,10 +70,13 @@ def addGame(request):
     context = {
         "addGameForm": addGame
     }
+    userCollector= GameCollector.objects.filter(username=request.user)  #grabs the game collector
+    print(userCollector)
     if request.method == "POST":
         print('save')
         thisgame=Game.objects.create(name=request.POST["name"], developer=request.POST['developer'], dateMade=request.POST['dateMade'],
-                            ageLimit=request.POST["ageLimit"])
+                            ageLimit=request.POST["ageLimit"], gameCreator=userCollector[0])
+        print(request.user)
         return redirect('index')
     else:
         print('hi')
