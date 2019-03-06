@@ -40,6 +40,7 @@ def confirmAccount(request):  # message to confirm user is inside
 
     if request.POST['Password1'] == request.POST['Password2']:  # if the passwords match the user will be created
         User.objects.create_user(request.POST['username'], "", request.POST['Password1'])  # creates user and pass
+        newGameCollector=GameCollector.objects.create(username = request.POST['username'])
         return render(request, 'gameApp/confirm.html', context)  # renders to conformation page
 
     else:
@@ -65,33 +66,34 @@ def confirmAccount(request):  # message to confirm user is inside
 
 @login_required
 def addGame(request):
-    addGame = GameForm()
+    addGame = GameForm(request.POST or None)
     context = {
         "addGameForm": addGame
     }
     userCollector = GameCollector.objects.filter(username=request.user)  # grabs the game collector
     print(userCollector)
     if request.method == "POST":
+        print(request.POST)
+
         print('save')
-        thisgame = Game.objects.create(name=request.POST["name"], developer=request.POST['developer'],
-                                       dateMade=request.POST['dateMade'],
-                                       ageLimit=request.POST["ageLimit"], gameCreator=userCollector[0])
+        placeholder=request.POST['dateMade_year'] + '-' + request.POST['dateMade_month'] + "-" + request.POST['dateMade_day']
+        thisgame = Game.objects.create(name=request.POST["name"], developer=request.POST['developer'], dateMade=placeholder, ageLimit=request.POST["ageLimit"], gameCreator=userCollector[0])
         print(request.user)
 
         return redirect('index')
     else:
         print('hi')
 
-    return render(request, 'gameApp/createGame.html', context)
+    return render(request, 'gameApp/createGame.html',context)
 
 def editGame(request,id):
     game = get_object_or_404(Game, pk=id)
-    newGame = GameForm(request.POST or None, instance=game)
+    newGame = GameForm(request.POST, instance=game)
     if newGame.is_valid():
         newGame.save()
         return redirect("index")
 
-    return render(request, "gameApp/index.html", {'newGame': newGame})
+    return render(request, "gameApp/createGame.html", {'addGameForm': newGame})
 
 
 
@@ -103,4 +105,4 @@ def deleteGame(request,id):
         game.delete()
         return redirect('index')
 
-    return render(request, "contactBookApp/deleteGame.html", {"selectedGame": game})
+    return render(request, "gameApp/deleteGame.html", {"selectedGame": game})
