@@ -60,3 +60,5 @@ A user's rank is "grunt" by default. Their rank should change based off of the i
 MDN article: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication
 
 Djanog Many to One article for foreign keys: https://docs.djangoproject.com/en/2.1/topics/db/examples/many_to_one/
+<hr>
+7 points. When I edit a game it doesn't bring in the existing data.
